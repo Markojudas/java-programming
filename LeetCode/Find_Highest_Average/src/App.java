@@ -22,26 +22,46 @@ public class App {
 
     public static String solution(String[] records) {
 
-        Map<String, Double> helperStruct = new HashMap<>();
+        // Map that stores the average score of the students
+        Map<String, Double> studentAverage = new HashMap<>();
+
+        // Map that stores the number of time the student is read
+        Map<String, Integer> studentOccurance = new HashMap<>();
 
         String ans = "";
         double highest = 0.0;
 
         for (String student : records) {
+
+            // split the string to get the name and score
             String[] studentRec = student.split(": ");
 
-            if (helperStruct.get(studentRec[0]) == null) {
-                helperStruct.put(studentRec[0], Double.parseDouble(studentRec[1]));
-            } else {
-                helperStruct.put(studentRec[0],
-                        ((helperStruct.get(studentRec[0]) + Double.parseDouble(studentRec[1]))) / 2);
-            }
+            String name = studentRec[0];
+            Double score = Double.parseDouble(studentRec[1]);
 
-            double studentAvg = helperStruct.get(studentRec[0]);
+            // if it is the first time seeing this student...
+            // set the student score and mark the occurance of the student
+            // else, add the scores and get the average
+            if (studentAverage.get(name) == null) {
+                studentAverage.put(name, score);
+                studentOccurance.put(name, 1);
+            } else {
+                studentOccurance.put(name, studentOccurance.get(name) + 1);
+                studentAverage.put(name, (studentAverage.get(name) + score) / studentOccurance.get(name));
+
+            }
+            // debug statement
+            // System.out.println(studentRec[0] + " appears on the array " +
+            // studentOccurance.get(studentRec[0]) +
+            // " times and has an average of: " + studentAverage.get(studentRec[0]));
+
+            // Once the hashmap is set with the final average for each student...
+            // lets see which one has the highest
+            double studentAvg = studentAverage.get(name);
 
             if (studentAvg > highest) {
                 highest = studentAvg;
-                ans = studentRec[0];
+                ans = name;
             }
         }
 
