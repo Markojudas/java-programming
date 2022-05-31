@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,6 +20,70 @@ public class App {
      * "John: 4"]
      * 
      */
+
+    public static String solution2(String[] records) {
+        String ans = "";
+        double highest = 0;
+
+        ArrayList<Double> score_occurr;
+        Map<String, ArrayList<Double>> students = new HashMap<>();
+
+        for (String student : records) {
+
+            String[] studentRecords = student.split(": ");
+
+            String name = studentRecords[0];
+            double score = Double.parseDouble(studentRecords[1]);
+
+            if (students.get(name) == null) {
+                score_occurr = new ArrayList<>();
+                score_occurr.add(score); // the score
+                score_occurr.add(1.0); // the occurrance
+                students.put(name, score_occurr);
+            } else {
+                double currentScore = getValue(students, name, 0);
+                double occurance = getValue(students, name, 1) + 1;
+
+                students.get(name).set(1, occurance);
+                students.get(name).set(0, (currentScore + score) / occurance);
+            }
+
+            double currentAvg = getValue(students, name, 0);
+
+            if (currentAvg > highest) {
+                highest = currentAvg;
+                ans = name;
+            }
+        }
+
+        print_student_avg_occurrance(students);
+
+        return ans;
+    }
+
+    public static double getValue(Map<String, ArrayList<Double>> students, String student, int idx) {
+
+        return students.get(student).get(idx);
+    }
+
+    public static void print_student_avg_occurrance(Map<String, ArrayList<Double>> students) {
+
+        String name;
+        double avg;
+        double occurance;
+
+        for (String key : students.keySet()) {
+            name = key;
+            avg = students.get(key).get(0);
+            occurance = students.get(key).get(1);
+
+            System.out.println("Student Name: " + name);
+            System.out.println("Occurance: " + occurance);
+            System.out.println("Average Score: " + avg);
+            System.out.println();
+        }
+
+    }
 
     public static String solution(String[] records) {
 
@@ -87,8 +152,8 @@ public class App {
                 "John: 4"
         };
 
-        String answer = solution(records);
-        String answer2 = solution(records2);
+        String answer = solution2(records);
+        String answer2 = solution2(records2);
 
         System.out.println(answer);
         System.out.println(answer2);
