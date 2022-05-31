@@ -4,7 +4,16 @@ import java.util.Map;
 public class App {
 
     /*
+     * Find the student with the highest score average:
+     * 
+     * example 1)
      * records = ["John: 5", "Michael: 4", "Ruby: 2", "Ruby: 5", "Michael: 5"]
+     * Answer: "John"
+     * Reason:
+     * John's average: 5
+     * Michael's average: (4+5)/ 2 = 4.5
+     * Ruby's average: 2 / 2 = 1
+     * 
      * 
      * records = ["Kate: 5", "Kate: 5", "Maria: 2", "John: 5", "Michael: 4",
      * "John: 4"]
