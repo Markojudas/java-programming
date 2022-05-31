@@ -36,7 +36,7 @@ public class App {
             double score = Double.parseDouble(studentRecords[1]);
 
             if (students.get(name) == null) {
-                score_occurr = new ArrayList<>();
+                score_occurr = new ArrayList<>(); // this creates N arraylists!!!
                 score_occurr.add(score); // the score
                 score_occurr.add(1.0); // the occurrance
                 students.put(name, score_occurr);
